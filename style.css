@@ -1,12 +1,14 @@
 main {
   width: 300px;
-  min-height: 150px;
   padding-top: 1rem;
-  background-image: url(./logo.svg);
+}
+
+section{
+  min-height: 150px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: top right;
-  background-size: 36%;
+  background-size: 30%;
 }
 
 .switch {
@@ -22,9 +24,6 @@ main {
   position: relative;
 }
 
-.switch.active {
-  box-shadow: 0 0 10px 0 rgb(70 107 254 / 78%);
-}
 
 .switch__trigger {
   width: 42.5px;
@@ -41,7 +40,6 @@ main {
 
 .switch.active .switch__trigger {
   left: 66px;
-  background-color: #4d6bfe;
 }
 
 .switch__checkbox {
@@ -52,7 +50,6 @@ main {
   font-weight: bold;
   font-size: 18px;
   margin-left: 10px;
-  color: #4d6bfe;
 }
 
 footer {
@@ -80,4 +77,34 @@ footer a {
   font-weight: bold;
   color: black;
   text-decoration: underline;
+}
+
+/* ===== MODIFIERS ===== */
+
+/* DEEPSEEK */
+.deepseek{
+  background-image: url(./logo.svg);
+}
+.deepseek .switch.active {
+  box-shadow: 0 0 10px 0 rgb(70 107 254 / 78%);
+}
+.deepseek  .switch__status {
+  color: #4d6bfe;
+}
+.deepseek .switch.active .switch__trigger {
+  background-color: #4d6bfe;
+}
+
+/* CHATGPT */
+.chatgpt{
+  background-image: url(./chatgpt-logo.svg);
+}
+.chatgpt .switch.active {
+  box-shadow: 0 0 10px 0 rgb(16 163 127 / 78%);
+}
+.chatgpt  .switch__status {
+  color:  #14A37F;
+}
+.chatgpt .switch.active .switch__trigger {
+  background-color:  #14A37F;
 }

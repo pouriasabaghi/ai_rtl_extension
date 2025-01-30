@@ -1,5 +1,5 @@
-function setAutoDirection() {
-  const elements = document.querySelectorAll(".ds-markdown");
+function setAutoDirection(resultSelector) {
+  const elements = document.querySelectorAll(resultSelector);
   elements.forEach((element) => {
     if (!element.hasAttribute("dir")) {
       element.setAttribute("dir", "auto");
@@ -25,16 +25,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     pre{
         direction:ltr;
     }
+    code{
+        direction:ltr;
+    }
     </stye>`
   );
 
   let observer;
+console.log(request.resultSelector);
 
   if (request.action === "rtl") {
     observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.addedNodes.length) {
-          setAutoDirection();
+          setAutoDirection(request.resultSelector);
         }
       });
     });
@@ -44,7 +48,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       subtree: true,
     });
 
-    setAutoDirection();
+    setAutoDirection(request.resultSelector);
   } else {
     stopObserverAndReset(observer);
   }
