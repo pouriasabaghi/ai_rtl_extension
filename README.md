@@ -27,3 +27,5 @@ git clone https://github.com/pouriasabaghi/deepseek_rtl_extention.git
 ## Contributing
 Feel free to fork the repository and submit pull requests for any enhancements or bug fixes. Contributions are always welcome!
 
+## License
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
