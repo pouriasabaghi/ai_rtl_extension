@@ -1,8 +1,8 @@
-function setAutoDirection(resultSelector) {
+function setAutoDirection({ resultSelector }) {
   const elements = document.querySelectorAll(resultSelector);
   elements.forEach((element) => {
     if (!element.hasAttribute("dir")) {
-      element.setAttribute("dir", "auto");
+      element.setAttribute("dir", "rtl");
     }
   });
 }
@@ -12,33 +12,20 @@ function stopObserverAndReset(observer) {
     observer.disconnect();
   }
 
-  const elements = document.querySelectorAll('[dir="auto"]');
+  const elements = document.querySelectorAll('[dir="rtl"]');
   elements.forEach((element) => {
     element.removeAttribute("dir");
   });
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  document.head.insertAdjacentHTML(
-    "beforeend",
-    `<style>
-    pre{
-        direction:ltr;
-    }
-    code{
-        direction:ltr;
-    }
-    </stye>`
-  );
-
   let observer;
-console.log(request.resultSelector);
 
   if (request.action === "rtl") {
     observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.addedNodes.length) {
-          setAutoDirection(request.resultSelector);
+          setAutoDirection(request);
         }
       });
     });
@@ -48,7 +35,12 @@ console.log(request.resultSelector);
       subtree: true,
     });
 
-    setAutoDirection(request.resultSelector);
+    setAutoDirection(request);
+    request.rtlConflictFixerStyle &&
+      document.head.insertAdjacentHTML(
+        "beforeend",
+        request.rtlConflictFixerStyle
+      );
   } else {
     stopObserverAndReset(observer);
   }

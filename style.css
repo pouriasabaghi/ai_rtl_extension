@@ -4,7 +4,7 @@ main {
 }
 
 section{
-  min-height: 150px;
+  min-height: 160px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: top right;
@@ -107,4 +107,18 @@ footer a {
 }
 .chatgpt .switch.active .switch__trigger {
   background-color:  #14A37F;
+}
+
+/* Copilot */
+.copilot{
+  background-image: url(./copilot-logo.svg);
+}
+.copilot .switch.active {
+  box-shadow: 0 0 10px 0 rgb(253 83 197 / 78%);
+}
+.copilot  .switch__status {
+  color:  #CD53B3;
+}
+.copilot .switch.active .switch__trigger {
+  background-color:  #CD53B3;
 }
