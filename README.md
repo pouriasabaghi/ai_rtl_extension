@@ -3,8 +3,12 @@
 
 **DeepSeek RTL** is a Chrome extension that makes the DeepSeek AI website fully RTL-compatible, improving the experience for right-to-left language users.
 
+## Screenshot
+![saved_quotes](https://raw.github.com/pouriasabaghi/save_quotes/main/screenshot.png)
+
 ## V2
 **ChatGPT RTL** we also added RTL support to the ChatGPT website.
+**Copilot RTL** we also added RTL support to the Copilot website.
 
 ## Features
 **RTL Compatibility For All AI Websites**
