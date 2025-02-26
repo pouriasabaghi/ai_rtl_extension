@@ -1,41 +1,50 @@
-document.addEventListener("DOMContentLoaded", rtlManger);
+document.addEventListener("DOMContentLoaded", rtlManager);
 
-function rtlManger() {
-  const handler = {
-    deepseek: deepseekRTL,
-    chatgpt: chatgptRTL,
-    copilot: copilotRTL,
-  };
+function rtlManager() {
+  const platforms = [
+    {
+      key: "deepseek",
+      aiResponseSelector: ".ds-markdown",
+      rtlConflictFixerStyle: ` <style>code{ display:inline-block; }</stye>`,
+    },
+    {
+      key: "chatgpt",
+      aiResponseSelector: ".markdown",
+      rtlConflictFixerStyle: null,
+    },
+    {
+      key: "copilot",
+      aiResponseSelector: "[data-content='ai-message'] div",
+      rtlConflictFixerStyle: `<style>code{ display:inline-block; }</stye>`,
+    },
+    {
+      key: "aistudio",
+      aiResponseSelector: ".chat-turn-container",
+      rtlConflictFixerStyle: ``,
+    },
+  ];
 
-  for (const key in handler) {
-    handler[key]();
-  }
+  platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle }) => {
+    setupRTL(key, aiResponseSelector, rtlConflictFixerStyle);
+  });
 }
 
-function deepseekRTL() {
-  const CONTAINER_SELECTOR = ".deepseek";
-  const RESULT_SELECTOR = ".ds-markdown";
-  const DIRECTION_STORAGE_KEY = "deepseek_direction";
+/**
+ * Setup the RTL switch for the given platform.
+ * @param {string} platform - The platform key, e.g. it need to be the same as  section class name in index.html like "deepseek", "chatgpt".
+ * @param {string} aiResponseSelector - The CSS selector for the AI response element.
+ * @param {string} rtlConflictFixerStyle - The CSS to inject to fix RTL conflicts if needed.
+ */
+function setupRTL(platform, aiResponseSelector, rtlConflictFixerStyle) {
+  const DIRECTION_STORAGE_KEY = `${platform}_direction`;
 
-  const container = document.querySelector(CONTAINER_SELECTOR);
+  const container = document.querySelector(`.${platform}`);
+  if (!container) return;
+
   const checkbox = container.querySelector(".switch__checkbox");
   const switchLabel = container.querySelector(".switch");
 
   const lastDirection = localStorage.getItem(DIRECTION_STORAGE_KEY) || "ltr";
-
-  const rtlConflictFixerStyle = `
-  <style>
-    pre{
-        direction:ltr;
-        text-align:left !important;
-    }
-    code{
-        direction:ltr;
-        display:inline-block;
-        text-align:left !important;
-    }
-  </stye>`;
-
 
   if (lastDirection === "rtl") {
     checkbox.checked = true;
@@ -44,147 +53,27 @@ function deepseekRTL() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {
         action: "rtl",
-        resultSelector: RESULT_SELECTOR,
-        origin: "deepseek",
-        rtlConflictFixerStyle
+        platform,
+        aiResponseSelector,
+        rtlConflictFixerStyle,
       });
     });
   }
 
-  function handleDirection(e) {
+  checkbox.addEventListener("change", function (e) {
     e.target.closest(".switch").classList.toggle("active");
 
-    const direction = !checkbox.checked ? "ltr" : "rtl";
+    const direction = checkbox.checked ? "rtl" : "ltr";
 
     localStorage.setItem(DIRECTION_STORAGE_KEY, direction);
-
-    const request = {
-      action: direction,
-      resultSelector: RESULT_SELECTOR,
-      origin: "deepseek",
-    };
-
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, request);
-    });
-  }
-
-  checkbox.addEventListener("change", handleDirection);
-}
-
-function chatgptRTL() {
-  const CONTAINER_SELECTOR = ".chatgpt";
-  const RESULT_SELECTOR = ".markdown";
-  const DIRECTION_STORAGE_KEY = "chatgpt_direction";
-
-  const container = document.querySelector(CONTAINER_SELECTOR);
-  const checkbox = container.querySelector(".switch__checkbox");
-  const switchLabel = container.querySelector(".switch");
-
-  const lastDirection = localStorage.getItem(DIRECTION_STORAGE_KEY) || "ltr";
-
-  const rtlConflictFixerStyle = `
-  <style>
-    pre{
-        direction:ltr !important;
-        text-align:left !important;
-    }
-    code{
-        direction:ltr !important;
-        text-align:left !important;
-    }
-  </stye>`;
-
-  if (lastDirection === "rtl") {
-    checkbox.checked = true;
-    switchLabel.classList.add("active");
 
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {
-        action: "rtl",
-        resultSelector: RESULT_SELECTOR,
-        origin: "chatgpt",
+        action: direction,
+        platform,
+        aiResponseSelector,
+        rtlConflictFixerStyle,
       });
     });
-  }
-
-  function handleDirection(e) {
-    e.target.closest(".switch").classList.toggle("active");
-
-    const direction = !checkbox.checked ? "ltr" : "rtl";
-
-    localStorage.setItem(DIRECTION_STORAGE_KEY, direction);
-
-    const request = {
-      action: direction,
-      resultSelector: RESULT_SELECTOR,
-      origin: "chatgpt",
-      rtlConflictFixerStyle
-    };
-
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, request);
-    });
-  }
-
-  checkbox.addEventListener("change", handleDirection);
-}
-
-function copilotRTL() {
-  const CONTAINER_SELECTOR = ".copilot";
-  const RESULT_SELECTOR = "[data-content='ai-message'] div";
-  const DIRECTION_STORAGE_KEY = "copilot_direction";
-
-  const container = document.querySelector(CONTAINER_SELECTOR);
-  const checkbox = container.querySelector(".switch__checkbox");
-  const switchLabel = container.querySelector(".switch");
-
-  const lastDirection = localStorage.getItem(DIRECTION_STORAGE_KEY) || "ltr";
-
-  const rtlConflictFixerStyle = `
-  <style>
-    pre{
-        direction:ltr;
-        text-align:left !important;
-    }
-    code{
-        direction:ltr;
-        display:inline-block;
-        text-align:left !important;
-    }
-  </stye>`;
-
-  if (lastDirection === "rtl") {
-    checkbox.checked = true;
-    switchLabel.classList.add("active");
-
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        action: "rtl",
-        resultSelector: RESULT_SELECTOR,
-        origin: "copilot",
-      });
-    });
-  }
-
-  function handleDirection(e) {
-    e.target.closest(".switch").classList.toggle("active");
-
-    const direction = !checkbox.checked ? "ltr" : "rtl";
-
-    localStorage.setItem(DIRECTION_STORAGE_KEY, direction);
-
-    const request = {
-      action: direction,
-      resultSelector: RESULT_SELECTOR,
-      origin: "copilot",
-      rtlConflictFixerStyle
-    };
-
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, request);
-    });
-  }
-
-  checkbox.addEventListener("change", handleDirection);
+  });
 }

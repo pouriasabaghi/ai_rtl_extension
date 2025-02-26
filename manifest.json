@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "DeepSeek RTL",
-    "version": "2.2",
+    "version": "2.3",
     "description": "DeepSeek RTL",
     "permissions": ["activeTab"], 
     "action": {
@@ -17,7 +17,7 @@
     },
     "content_scripts": [
       {
-        "matches": ["https://chat.deepseek.com/*", "https://chatgpt.com/*", "https://copilot.microsoft.com/*"],
+        "matches": ["https://chat.deepseek.com/*", "https://chatgpt.com/*", "https://copilot.microsoft.com/*","https://aistudio.google.com/*"],
         "js": ["content.js"]
       }
     ]

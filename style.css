@@ -1,33 +1,33 @@
 main {
   width: 300px;
   padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 section{
-  min-height: 160px;
+  min-height: 120px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: top right;
-  background-size: 30%;
+  background-size: 25%;
 }
 
 .switch {
-  height: 45px;
+  height: 35px;
   display: inline-flex;
   align-items: center;
   background: #e6e6e6;
   width: 95px;
-  padding: 0px 10px;
+  padding: 0px 5px;
   border-radius: 30px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.221);
   cursor: pointer;
   position: relative;
 }
 
-
 .switch__trigger {
-  width: 42.5px;
-  height: 40px;
+  width: 32.5px;
+  height: 30px;
   display: inline-block;
   background-color: white;
   box-shadow: 0 0 10px 0 rgba(26, 185, 42, 0.221);
@@ -48,7 +48,7 @@ section{
 
 .switch__status {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 14px;
   margin-left: 10px;
 }
 
@@ -121,4 +121,18 @@ footer a {
 }
 .copilot .switch.active .switch__trigger {
   background-color:  #CD53B3;
+}
+
+/* AIStudio */
+.aistudio{
+  background-image: url(./aistudio-logo.svg);
+}
+.aistudio .switch.active {
+  box-shadow: 0 0 10px 0 rgb(0 87 204 / 78%);
+}
+.aistudio  .switch__status {
+  color:  #0057CC;
+}
+.aistudio .switch.active .switch__trigger {
+  background-color:  #0057CC;
 }
