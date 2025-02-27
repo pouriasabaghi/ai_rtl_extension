@@ -1,7 +1,7 @@
 function setAutoDirection({ aiResponseSelector }) {
   const elements = document.querySelectorAll(aiResponseSelector);
   elements.forEach((element) => {
-    if (!element.hasAttribute("dir")) {
+    if (!element.hasAttribute("dir") || element.getAttribute("dir") !== "rtl") {
       element.setAttribute("dir", "rtl");
     }
   });

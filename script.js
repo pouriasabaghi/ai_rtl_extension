@@ -5,7 +5,7 @@ function rtlManager() {
     {
       key: "deepseek",
       aiResponseSelector: ".ds-markdown",
-      rtlConflictFixerStyle: ` <style>code{ display:inline-block; }</stye>`,
+      rtlConflictFixerStyle: ` <style>code{ display:inline-block; }</style>`,
     },
     {
       key: "chatgpt",
@@ -15,16 +15,23 @@ function rtlManager() {
     {
       key: "copilot",
       aiResponseSelector: "[data-content='ai-message'] div",
-      rtlConflictFixerStyle: `<style>code{ display:inline-block; }</stye>`,
+      rtlConflictFixerStyle: `<style>code{ display:inline-block; }</style>`,
     },
     {
       key: "aistudio",
       aiResponseSelector: ".chat-turn-container",
       rtlConflictFixerStyle: ``,
     },
+    {
+      key: "grok",
+      aiResponseSelector: ".message-bubble",
+      rtlConflictFixerStyle: ``,
+    },
   ];
 
   platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle }) => {
+    console.log(key,aiResponseSelector,rtlConflictFixerStyle);
+    
     setupRTL(key, aiResponseSelector, rtlConflictFixerStyle);
   });
 }

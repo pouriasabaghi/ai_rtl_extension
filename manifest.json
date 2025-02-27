@@ -1,25 +1,30 @@
 {
-    "manifest_version": 3,
-    "name": "DeepSeek RTL",
-    "version": "2.3",
-    "description": "DeepSeek RTL",
-    "permissions": ["activeTab"], 
-    "action": {
-      "default_popup": "index.html"
-    },
-    "background": {
-      "service_worker": "background.js"
-    },
-    "icons": {
-      "16": "icon-16px.png",
-      "48": "icon-48px.png",
-      "128": "icon-128px.png"
-    },
-    "content_scripts": [
-      {
-        "matches": ["https://chat.deepseek.com/*", "https://chatgpt.com/*", "https://copilot.microsoft.com/*","https://aistudio.google.com/*"],
-        "js": ["content.js"]
-      }
-    ]
-  }
-  
+  "manifest_version": 3,
+  "name": "AI RTL",
+  "version": "2.4",
+  "description": "سایت های هوش مصنوعی رو راستچین کنید و لذت ببرید",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "128x128.png",
+    "48": "128x128.png",
+    "128": "128x128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.deepseek.com/*",
+        "https://chatgpt.com/*",
+        "https://copilot.microsoft.com/*",
+        "https://aistudio.google.com/*",
+        "https://grok.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ]
+}

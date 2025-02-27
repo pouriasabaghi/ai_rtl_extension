@@ -1,23 +1,23 @@
 main {
-  width: 300px;
+  width:230px;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
 section{
-  min-height: 120px;
+  min-height: 80px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: top right;
-  background-size: 25%;
+  background-size: 30%;
 }
 
 .switch {
-  height: 35px;
+  height: 25px;
   display: inline-flex;
   align-items: center;
   background: #e6e6e6;
-  width: 95px;
+  width: 60px;
   padding: 0px 5px;
   border-radius: 30px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.221);
@@ -26,8 +26,8 @@ section{
 }
 
 .switch__trigger {
-  width: 32.5px;
-  height: 30px;
+  width: 24.5px;
+  height: 20px;
   display: inline-block;
   background-color: white;
   box-shadow: 0 0 10px 0 rgba(26, 185, 42, 0.221);
@@ -39,7 +39,7 @@ section{
 }
 
 .switch.active .switch__trigger {
-  left: 66px;
+  left: 39px;
 }
 
 .switch__checkbox {
@@ -48,8 +48,8 @@ section{
 
 .switch__status {
   font-weight: bold;
-  font-size: 14px;
-  margin-left: 10px;
+  font-size: 12px;
+  margin-left: 2px;
 }
 
 footer {
@@ -83,7 +83,7 @@ footer a {
 
 /* DEEPSEEK */
 .deepseek{
-  background-image: url(./logo.svg);
+  background-image: url(./logo/deepseek-logo.svg);
 }
 .deepseek .switch.active {
   box-shadow: 0 0 10px 0 rgb(70 107 254 / 78%);
@@ -97,7 +97,7 @@ footer a {
 
 /* CHATGPT */
 .chatgpt{
-  background-image: url(./chatgpt-logo.svg);
+  background-image: url(./logo/chatgpt-logo.svg);
 }
 .chatgpt .switch.active {
   box-shadow: 0 0 10px 0 rgb(16 163 127 / 78%);
@@ -111,7 +111,7 @@ footer a {
 
 /* Copilot */
 .copilot{
-  background-image: url(./copilot-logo.svg);
+  background-image: url(./logo/copilot-logo.svg);
 }
 .copilot .switch.active {
   box-shadow: 0 0 10px 0 rgb(253 83 197 / 78%);
@@ -125,7 +125,7 @@ footer a {
 
 /* AIStudio */
 .aistudio{
-  background-image: url(./aistudio-logo.svg);
+  background-image: url(./logo/aistudio-logo.svg);
 }
 .aistudio .switch.active {
   box-shadow: 0 0 10px 0 rgb(0 87 204 / 78%);
@@ -135,4 +135,18 @@ footer a {
 }
 .aistudio .switch.active .switch__trigger {
   background-color:  #0057CC;
+}
+
+/* AIStudio */
+.grok{
+  background-image: url(./logo/grok-logo.svg);
+}
+.grok .switch.active {
+  box-shadow: 0 0 10px 0 rgb(0 0 0 / 78%);
+}
+.grok  .switch__status {
+  color:  #000;
+}
+.grok .switch.active .switch__trigger {
+  background-color:  #000;
 }
