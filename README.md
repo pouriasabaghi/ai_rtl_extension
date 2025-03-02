@@ -4,7 +4,7 @@
 
 ## Screenshot
 
-![ai rtl extension](https://raw.github.com/pouriasabaghi/ai_rtl_extention/main/screenshot.png)
+![ai rtl extension](https://raw.github.com/pouriasabaghi/ai_rtl_extension/main/screenshot.png)
 
 ## V2
 
