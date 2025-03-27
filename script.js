@@ -27,6 +27,11 @@ function rtlManager() {
       aiResponseSelector: ".message-bubble",
       rtlConflictFixerStyle: ``,
     },
+    {
+      key: "claude",
+      aiResponseSelector: "[data-is-streaming]",
+      rtlConflictFixerStyle: ``,
+    },
   ];
 
   platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle }) => {

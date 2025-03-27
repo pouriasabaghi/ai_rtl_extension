@@ -137,7 +137,7 @@ footer a {
   background-color:  #0057CC;
 }
 
-/* AIStudio */
+/* Grok */
 .grok{
   background-image: url(./logo/grok-logo.svg);
 }
@@ -149,4 +149,18 @@ footer a {
 }
 .grok .switch.active .switch__trigger {
   background-color:  #000;
+}
+
+/* Claude */
+.claude{
+  background-image: url(./logo/claude-logo.svg);
+}
+.claude .switch.active {
+  box-shadow: 0 0 10px 0 rgb(217 119 87 / 78%);
+}
+.claude  .switch__status {
+  color:  #D97757;
+}
+.claude .switch.active .switch__trigger {
+  background-color:  #D97757;
 }
