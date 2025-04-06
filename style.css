@@ -164,3 +164,17 @@ footer a {
 .claude .switch.active .switch__trigger {
   background-color:  #D97757;
 }
+
+/* TheB.AI */
+.thebai{
+  background-image: url(./logo/thebai-logo.svg);
+}
+.thebai .switch.active {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.78);
+}
+.thebai  .switch__status {
+  color:  #000;
+}
+.thebai .switch.active .switch__trigger {
+  background-color:  #000;
+}

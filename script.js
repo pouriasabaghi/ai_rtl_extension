@@ -32,11 +32,14 @@ function rtlManager() {
       aiResponseSelector: "[data-is-streaming]",
       rtlConflictFixerStyle: ``,
     },
+    {
+      key: "thebai",
+      aiResponseSelector: "#html2canvas",
+      rtlConflictFixerStyle: ``,
+    },
   ];
 
   platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle }) => {
-    console.log(key,aiResponseSelector,rtlConflictFixerStyle);
-    
     setupRTL(key, aiResponseSelector, rtlConflictFixerStyle);
   });
 }
