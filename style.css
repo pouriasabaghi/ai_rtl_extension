@@ -178,3 +178,17 @@ footer a {
 .thebai .switch.active .switch__trigger {
   background-color:  #000;
 }
+
+/* Monica */
+.monica{
+  background-image: url(./logo/monica-logo.svg);
+}
+.monica .switch.active {
+  box-shadow: 0 0 10px 0 rgba(81, 95, 251, 1);
+}
+.monica  .switch__status {
+  color:  #515FFB;
+}
+.monica .switch.active .switch__trigger {
+  background-color:  #515FFB;
+}

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AI RTL",
-  "version": "2.7",
+  "version": "2.8",
   "description": "سایت های هوش مصنوعی رو راستچین کنید و لذت ببرید",
   "permissions": ["activeTab"],
   "action": {
@@ -24,7 +24,8 @@
         "https://aistudio.google.com/*",
         "https://grok.com/*",
         "https://claude.ai/*",
-        "https://beta.theb.ai/*"
+        "https://beta.theb.ai/*",
+        "https://monica.im/*"
       ],
       "js": ["content.js"]
     }

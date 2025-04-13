@@ -37,6 +37,11 @@ function rtlManager() {
       aiResponseSelector: "#html2canvas",
       rtlConflictFixerStyle: ``,
     },
+    {
+      key: "monica",
+      aiResponseSelector: ".__markdown",
+      rtlConflictFixerStyle: ``,
+    },
   ];
 
   platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle }) => {
