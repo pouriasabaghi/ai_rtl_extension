@@ -13,6 +13,15 @@
 - **Microsoft Copilot RTL** we also added RTL support to the Microsoft Copilot website.
 - **AIStudio RTL** we also added RTL support to the AIStudio website.
 - **GrokAI RTL** we also added RTL support to the Grok website.
+- **Claude RTL** we also added RTL support to the Claude website.
+- **TheB RTL** we also added RTL support to the TheB website.
+- **Monica RTL** we also added RTL support to the Monica website.
+
+## V3
+- Automatic rtl
+
+## Did we miss some AI website?
+Feel free to open an issus
 
 ## Features
 
@@ -48,43 +57,37 @@ Contributing to this project is very easy there is only few steps
 <section class="custom-ai">...</section>
 ```
 
-- 2 - Add your ai unique class name as key to platforms array in rtlManager function in script.js
+- 2 - Add your ai unique class name as key to platforms array in background.js
 
 ```javascript
-function rtlManager() {
-  const platforms = [
+  let platforms = [
     {
       key: "custom-ai",
     },
   ];
-}
 ```
 
 - 3 - You need to find right selector for ai response for example in chatgpt is .markdown and add it to aiResponseSelector
 
 ```javascript
-function rtlManager() {
-  const platforms = [
+  let platforms = [
     {
       key: "custom-ai",
       aiResponseSelector: ".custom-ai-markdown", // this can be any valid selector
     },
   ];
-}
 ```
 
 - 4 - Maybe after changing page direction we need some fixing style for better experience you can add your style to rtlConflictFixerStyle
 
 ```javascript
-function rtlManager() {
-  const platforms = [
+  let platforms = [
     {
       key: "custom-ai",
       aiResponseSelector: ".custom-ai-markdown",
       rtlConflictFixerStyle: `<style>code{ display:inline-block; }</style>`,
     },
   ];
-}
 ```
 
 - 5 - Styling is optional step but you can create a logo for your custom ai and add it to logo directory and link it to your section in style.css and change modifiers
