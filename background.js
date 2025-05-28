@@ -39,6 +39,11 @@ let platforms = [
     aiResponseSelector: ".__markdown",
     rtlConflictFixerStyle: ``,
   },
+  {
+    key: "qwen",
+    aiResponseSelector: "#response-content-container",
+    rtlConflictFixerStyle: ``,
+  },
 ];
 
 chrome.storage.local.get(["platforms"], async function (result) {

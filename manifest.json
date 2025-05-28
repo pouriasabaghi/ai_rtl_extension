@@ -25,7 +25,8 @@
         "https://grok.com/*",
         "https://claude.ai/*",
         "https://beta.theb.ai/*",
-        "https://monica.im/*"
+        "https://monica.im/*",
+        "https://chat.qwen.ai/*"
       ],
       "js": ["content.js"]
     }

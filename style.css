@@ -192,3 +192,17 @@ footer a {
 .monica .switch.active .switch__trigger {
   background-color:  #515FFB;
 }
+
+/* qwen */
+.qwen{
+  background-image: url(./logo/qwen-logo.svg);
+}
+.qwen .switch.active {
+  box-shadow: 0 0 10px 0 rgb(98, 90, 237);
+}
+.qwen  .switch__status {
+  color:  #625aed;
+}
+.qwen .switch.active .switch__trigger {
+  background-color:  #625aed;
+}
