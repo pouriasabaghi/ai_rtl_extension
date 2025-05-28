@@ -1,3 +1,10 @@
+document.head.insertAdjacentHTML(
+  "beforeend",
+  `<style>
+    pre,code{ direction:ltr !important;text-align:left !important;} 
+  </style>`
+);
+
 function setAutoDirection({ aiResponseSelector }) {
   const elements = document.querySelectorAll(aiResponseSelector);
   elements.forEach((element) => {
@@ -18,36 +25,57 @@ function stopObserverAndReset(observer) {
   });
 }
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+async function getPlatforms(){
+  return new Promise(async function (res, rej) {
+    chrome.storage.local.get(['platforms'], async function (result) {
+        const platforms = result.platforms;        
+        res(platforms);
+    });
+  });
+}
+
+function createObserver(request){
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.addedNodes.length) {
+        setAutoDirection(request);
+      }
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  setAutoDirection(request);
+  request.rtlConflictFixerStyle &&
+    document.head.insertAdjacentHTML(
+      "beforeend",
+      request.rtlConflictFixerStyle
+    );
+
+    return observer;
+}
+
+async function autoRTL(){
+  const platforms = await getPlatforms();
+  platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle, rtl }) => {
+    if(rtl){
+      createObserver({key, aiResponseSelector, rtlConflictFixerStyle});
+    }
+  });
+}
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {    
+  // Handle test message
   let observer;
-  document.head.insertAdjacentHTML(
-    "beforeend",
-    `<style>
-      pre{ direction:ltr !important;text-align:left !important;} 
-      code{ direction:ltr; text-align:left !important;}
-    </style>`
-  );
+
   if (request.action === "rtl") {
-    observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.addedNodes.length) {
-          setAutoDirection(request);
-        }
-      });
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
-
-    setAutoDirection(request);
-    request.rtlConflictFixerStyle &&
-      document.head.insertAdjacentHTML(
-        "beforeend",
-        request.rtlConflictFixerStyle
-      );
+    observer = createObserver(request);
   } else {
     stopObserverAndReset(observer);
   }
 });
+
+window.addEventListener('load', autoRTL);

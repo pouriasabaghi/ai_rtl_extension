@@ -1,51 +1,11 @@
 document.addEventListener("DOMContentLoaded", rtlManager);
 
-function rtlManager() {
-  const platforms = [
-    {
-      key: "deepseek",
-      aiResponseSelector: ".ds-markdown",
-      rtlConflictFixerStyle: ` <style>code{ display:inline-block; }</style>`,
-    },
-    {
-      key: "chatgpt",
-      aiResponseSelector: ".markdown",
-      rtlConflictFixerStyle: null,
-    },
-    {
-      key: "copilot",
-      aiResponseSelector: "[data-content='ai-message'] div",
-      rtlConflictFixerStyle: `<style>code{ display:inline-block; }</style>`,
-    },
-    {
-      key: "aistudio",
-      aiResponseSelector: ".chat-turn-container",
-      rtlConflictFixerStyle: ``,
-    },
-    {
-      key: "grok",
-      aiResponseSelector: ".message-bubble",
-      rtlConflictFixerStyle: ``,
-    },
-    {
-      key: "claude",
-      aiResponseSelector: "[data-is-streaming]",
-      rtlConflictFixerStyle: ``,
-    },
-    {
-      key: "thebai",
-      aiResponseSelector: "#html2canvas",
-      rtlConflictFixerStyle: ``,
-    },
-    {
-      key: "monica",
-      aiResponseSelector: ".__markdown",
-      rtlConflictFixerStyle: ``,
-    },
-  ];
+let platforms = [];
+async function rtlManager() {
+  platforms = await getPlatforms();
 
-  platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle }) => {
-    setupRTL(key, aiResponseSelector, rtlConflictFixerStyle);
+  platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle, rtl }) => {
+    setupRTL(key, aiResponseSelector, rtlConflictFixerStyle, rtl);
   });
 }
 
@@ -55,18 +15,16 @@ function rtlManager() {
  * @param {string} aiResponseSelector - The CSS selector for the AI response element.
  * @param {string} rtlConflictFixerStyle - The CSS to inject to fix RTL conflicts if needed.
  */
-function setupRTL(platform, aiResponseSelector, rtlConflictFixerStyle) {
-  const DIRECTION_STORAGE_KEY = `${platform}_direction`;
-
+function setupRTL(platform, aiResponseSelector, rtlConflictFixerStyle, rtl) {
   const container = document.querySelector(`.${platform}`);
   if (!container) return;
 
   const checkbox = container.querySelector(".switch__checkbox");
   const switchLabel = container.querySelector(".switch");
 
-  const lastDirection = localStorage.getItem(DIRECTION_STORAGE_KEY) || "ltr";
-
-  if (lastDirection === "rtl") {
+  // Set initial state based on storage
+  const platformData = platforms.find(p => p.key === platform);
+  if (platformData && platformData.rtl) {
     checkbox.checked = true;
     switchLabel.classList.add("active");
 
@@ -85,7 +43,12 @@ function setupRTL(platform, aiResponseSelector, rtlConflictFixerStyle) {
 
     const direction = checkbox.checked ? "rtl" : "ltr";
 
-    localStorage.setItem(DIRECTION_STORAGE_KEY, direction);
+    platforms.forEach(({ key }) => {
+      if(key === platform){
+        platforms.find(p => p.key === platform).rtl = direction === "rtl";
+      }
+    });
+    setPlatforms(platforms);
 
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {
@@ -96,4 +59,17 @@ function setupRTL(platform, aiResponseSelector, rtlConflictFixerStyle) {
       });
     });
   });
+}
+
+async function getPlatforms(){
+  return new Promise(async function (res, rej) {
+    chrome.storage.local.get(['platforms'], async function (result) {
+        var platforms = result.platforms;        
+        res(platforms);
+    });
+  });
+}
+
+function setPlatforms(updatedPlatforms){
+  chrome.storage.local.set({ platforms: updatedPlatforms }, function () {}); 
 }
