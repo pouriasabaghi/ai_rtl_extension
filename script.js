@@ -14,6 +14,7 @@ async function rtlManager() {
  * @param {string} platform - The platform key, e.g. it need to be the same as  section class name in index.html like "deepseek", "chatgpt".
  * @param {string} aiResponseSelector - The CSS selector for the AI response element.
  * @param {string} rtlConflictFixerStyle - The CSS to inject to fix RTL conflicts if needed.
+ * @param {boolean} rtl - The initial state of the RTL switch.
  */
 function setupRTL(platform, aiResponseSelector, rtlConflictFixerStyle, rtl) {
   const container = document.querySelector(`.${platform}`);
@@ -23,8 +24,7 @@ function setupRTL(platform, aiResponseSelector, rtlConflictFixerStyle, rtl) {
   const switchLabel = container.querySelector(".switch");
 
   // Set initial state based on storage
-  const platformData = platforms.find(p => p.key === platform);
-  if (platformData && platformData.rtl) {
+  if (rtl) {
     checkbox.checked = true;
     switchLabel.classList.add("active");
 
