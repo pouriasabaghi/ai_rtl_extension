@@ -18,7 +18,8 @@
 - **Monica RTL** we also added RTL support to the Monica website.
 
 ## V3
-- Automatic rtl
+- Automatic RTL
+- Prompt input RTL
 
 ## Did we miss some AI website?
 Feel free to open an issus
