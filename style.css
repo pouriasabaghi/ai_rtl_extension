@@ -1,5 +1,5 @@
 main {
-  width:230px;
+  width:250px;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
@@ -61,12 +61,16 @@ footer {
   background: white;
   width: 100%;
   max-width: 600px;
-  height: 36px;
+  height: 50px;
   border-radius: 0.5rem 0.5rem 0 0;
   display: flex;
   align-items: center;
-  padding-left: 1rem;
+
   box-shadow: 0 0 17px 0 rgb(0 0 0 / 12%);
+}
+
+footer img{
+  vertical-align: middle;
 }
 
 footer span {

@@ -4,8 +4,8 @@ let platforms = [];
 async function rtlManager() {
   platforms = await getPlatforms();
 
-  platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle, rtl }) => {
-    setupRTL(key, aiResponseSelector, rtlConflictFixerStyle, rtl);
+  platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle, rtl, propmtInputSelector }) => {
+    setupRTL(key, aiResponseSelector, rtlConflictFixerStyle, rtl, propmtInputSelector);
   });
 }
 
@@ -16,7 +16,7 @@ async function rtlManager() {
  * @param {string} rtlConflictFixerStyle - The CSS to inject to fix RTL conflicts if needed.
  * @param {boolean} rtl - The initial state of the RTL switch.
  */
-function setupRTL(platform, aiResponseSelector, rtlConflictFixerStyle, rtl) {
+function setupRTL(platform, aiResponseSelector, rtlConflictFixerStyle, rtl, propmtInputSelector) {
   const container = document.querySelector(`.${platform}`);
   if (!container) return;
 
@@ -34,6 +34,7 @@ function setupRTL(platform, aiResponseSelector, rtlConflictFixerStyle, rtl) {
         platform,
         aiResponseSelector,
         rtlConflictFixerStyle,
+        propmtInputSelector,
       });
     });
   }
@@ -56,6 +57,7 @@ function setupRTL(platform, aiResponseSelector, rtlConflictFixerStyle, rtl) {
         platform,
         aiResponseSelector,
         rtlConflictFixerStyle,
+        propmtInputSelector,
       });
     });
   });

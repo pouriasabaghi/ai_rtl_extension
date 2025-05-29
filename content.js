@@ -5,13 +5,16 @@ document.head.insertAdjacentHTML(
   </style>`
 );
 
-function setAutoDirection({ aiResponseSelector }) {
+function setAutoDirection({ aiResponseSelector, propmtInputSelector }) {
   const elements = document.querySelectorAll(aiResponseSelector);
   elements.forEach((element) => {
     if (!element.hasAttribute("dir") || element.getAttribute("dir") !== "rtl") {
       element.setAttribute("dir", "rtl");
     }
   });
+
+  propmtInputSelector &&
+  document.querySelector(propmtInputSelector)?.setAttribute("dir", "auto");
 }
 
 function stopObserverAndReset(observer) {
@@ -25,16 +28,16 @@ function stopObserverAndReset(observer) {
   });
 }
 
-async function getPlatforms(){
+async function getPlatforms() {
   return new Promise(async function (res, rej) {
-    chrome.storage.local.get(['platforms'], async function (result) {
-        const platforms = result.platforms;        
-        res(platforms);
+    chrome.storage.local.get(["platforms"], async function (result) {
+      const platforms = result.platforms;
+      res(platforms);
     });
   });
 }
 
-function createObserver(request){
+function createObserver(request) {
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.addedNodes.length) {
@@ -49,25 +52,28 @@ function createObserver(request){
   });
 
   setAutoDirection(request);
+
   request.rtlConflictFixerStyle &&
     document.head.insertAdjacentHTML(
       "beforeend",
       request.rtlConflictFixerStyle
     );
 
-    return observer;
+  return observer;
 }
 
-async function autoRTL(){
+async function autoRTL() {
   const platforms = await getPlatforms();
-  platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle, rtl }) => {
-    if(rtl){
-      createObserver({key, aiResponseSelector, rtlConflictFixerStyle});
+  platforms.forEach(
+    ({ key, aiResponseSelector, rtlConflictFixerStyle, rtl, propmtInputSelector }) => {
+      if (rtl) {
+        createObserver({ key, aiResponseSelector, rtlConflictFixerStyle, propmtInputSelector });
+      }
     }
-  });
+  );
 }
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {    
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // Handle test message
   let observer;
 
@@ -78,4 +84,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-window.addEventListener('load', autoRTL);
+window.addEventListener("load", autoRTL);

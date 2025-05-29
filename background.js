@@ -1,13 +1,23 @@
+/**
+ * @typedef {Object} Platform
+ * @property {string} key - Unique key of the platform
+ * @property {string} aiResponseSelector - CSS selector to find AI responses
+ * @property {string} [rtlConflictFixerStyle] - Optional inline style to fix RTL conflicts
+ * @property {string} [propmtInputSelector] - Optional CSS selector for prompt input
+ */
+
+/** @type {Platform[]} */
 let platforms = [
   {
     key: "deepseek",
     aiResponseSelector: ".ds-markdown",
     rtlConflictFixerStyle: ` <style>code{ display:inline-block; }</style>`,
+    propmtInputSelector: '#chat-input',
   },
   {
     key: "chatgpt",
     aiResponseSelector: ".markdown",
-    rtlConflictFixerStyle: null,
+    propmtInputSelector: '#prompt-textarea',
   },
   {
     key: "copilot",
@@ -17,32 +27,28 @@ let platforms = [
   {
     key: "aistudio",
     aiResponseSelector: ".chat-turn-container",
-    rtlConflictFixerStyle: ``,
+    propmtInputSelector: "textarea.textarea",
   },
   {
     key: "grok",
     aiResponseSelector: ".message-bubble",
-    rtlConflictFixerStyle: ``,
   },
   {
     key: "claude",
     aiResponseSelector: "[data-is-streaming]",
-    rtlConflictFixerStyle: ``,
   },
   {
     key: "thebai",
     aiResponseSelector: "#html2canvas",
-    rtlConflictFixerStyle: ``,
   },
   {
     key: "monica",
     aiResponseSelector: ".__markdown",
-    rtlConflictFixerStyle: ``,
   },
   {
     key: "qwen",
     aiResponseSelector: "#response-content-container",
-    rtlConflictFixerStyle: ``,
+    propmtInputSelector: "#chat-input",
   },
 ];
 
