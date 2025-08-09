@@ -12,12 +12,12 @@ let platforms = [
     key: "deepseek",
     aiResponseSelector: ".ds-markdown",
     rtlConflictFixerStyle: ` <style>code{ display:inline-block; }</style>`,
-    propmtInputSelector: '#chat-input',
+    propmtInputSelector: "#chat-input",
   },
   {
     key: "chatgpt",
     aiResponseSelector: ".markdown",
-    propmtInputSelector: '#prompt-textarea',
+    propmtInputSelector: "#prompt-textarea",
   },
   {
     key: "copilot",
@@ -31,7 +31,7 @@ let platforms = [
   },
   {
     key: "grok",
-    aiResponseSelector: ".message-bubble",
+    aiResponseSelector: ".response-content-markdown p",
   },
   {
     key: "claude",
@@ -47,7 +47,8 @@ let platforms = [
   },
   {
     key: "qwen",
-    aiResponseSelector: "#response-content-container",
+    aiResponseSelector: "#response-content-container *:not(.code-cntainer):not(.code-cntainer *)",
+    rtlConflictFixerStyle: `<style>#response-content-container *:not(.code-cntainer):not(.code-cntainer *){ unicode-bidi: embed;}</style>`,
     propmtInputSelector: "#chat-input",
   },
 ];
@@ -55,15 +56,17 @@ let platforms = [
 chrome.storage.local.get(["platforms"], async function (result) {
   if (result.platforms) {
     // Update rtl values from storage
-    platforms = platforms.map(platform => {
-      const storedPlatform = result.platforms.find(p => p.key === platform.key);
+    platforms = platforms.map((platform) => {
+      const storedPlatform = result.platforms.find(
+        (p) => p.key === platform.key
+      );
       return {
         ...platform,
-        rtl: storedPlatform ? storedPlatform.rtl : false
+        rtl: storedPlatform ? storedPlatform.rtl : false,
       };
     });
   }
-  
+
   // Save the updated platforms back to storage
   chrome.storage.local.set({ platforms: platforms }, function () {});
 });
