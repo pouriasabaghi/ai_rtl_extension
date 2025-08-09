@@ -1,15 +1,18 @@
 main {
-  width:250px;
+  width: 250px;
   padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
-section{
+section {
   min-height: 80px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: top right;
   background-size: 30%;
+}
+
+article {
+  padding-bottom: 2rem;
 }
 
 .switch {
@@ -69,7 +72,7 @@ footer {
   box-shadow: 0 0 17px 0 rgb(0 0 0 / 12%);
 }
 
-footer img{
+footer img {
   vertical-align: middle;
 }
 
@@ -86,13 +89,13 @@ footer a {
 /* ===== MODIFIERS ===== */
 
 /* DEEPSEEK */
-.deepseek{
+.deepseek {
   background-image: url(./logo/deepseek-logo.svg);
 }
 .deepseek .switch.active {
   box-shadow: 0 0 10px 0 rgb(70 107 254 / 78%);
 }
-.deepseek  .switch__status {
+.deepseek .switch__status {
   color: #4d6bfe;
 }
 .deepseek .switch.active .switch__trigger {
@@ -100,113 +103,113 @@ footer a {
 }
 
 /* CHATGPT */
-.chatgpt{
+.chatgpt {
   background-image: url(./logo/chatgpt-logo.svg);
 }
 .chatgpt .switch.active {
   box-shadow: 0 0 10px 0 rgb(16 163 127 / 78%);
 }
-.chatgpt  .switch__status {
-  color:  #14A37F;
+.chatgpt .switch__status {
+  color: #14a37f;
 }
 .chatgpt .switch.active .switch__trigger {
-  background-color:  #14A37F;
+  background-color: #14a37f;
 }
 
 /* Copilot */
-.copilot{
+.copilot {
   background-image: url(./logo/copilot-logo.svg);
 }
 .copilot .switch.active {
   box-shadow: 0 0 10px 0 rgb(253 83 197 / 78%);
 }
-.copilot  .switch__status {
-  color:  #CD53B3;
+.copilot .switch__status {
+  color: #cd53b3;
 }
 .copilot .switch.active .switch__trigger {
-  background-color:  #CD53B3;
+  background-color: #cd53b3;
 }
 
 /* AIStudio */
-.aistudio{
+.aistudio {
   background-image: url(./logo/aistudio-logo.svg);
 }
 .aistudio .switch.active {
   box-shadow: 0 0 10px 0 rgb(0 87 204 / 78%);
 }
-.aistudio  .switch__status {
-  color:  #0057CC;
+.aistudio .switch__status {
+  color: #0057cc;
 }
 .aistudio .switch.active .switch__trigger {
-  background-color:  #0057CC;
+  background-color: #0057cc;
 }
 
 /* Grok */
-.grok{
+.grok {
   background-image: url(./logo/grok-logo.svg);
 }
 .grok .switch.active {
   box-shadow: 0 0 10px 0 rgb(0 0 0 / 78%);
 }
-.grok  .switch__status {
-  color:  #000;
+.grok .switch__status {
+  color: #000;
 }
 .grok .switch.active .switch__trigger {
-  background-color:  #000;
+  background-color: #000;
 }
 
 /* Claude */
-.claude{
+.claude {
   background-image: url(./logo/claude-logo.svg);
 }
 .claude .switch.active {
   box-shadow: 0 0 10px 0 rgb(217 119 87 / 78%);
 }
-.claude  .switch__status {
-  color:  #D97757;
+.claude .switch__status {
+  color: #d97757;
 }
 .claude .switch.active .switch__trigger {
-  background-color:  #D97757;
+  background-color: #d97757;
 }
 
 /* TheB.AI */
-.thebai{
+.thebai {
   background-image: url(./logo/thebai-logo.svg);
 }
 .thebai .switch.active {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.78);
 }
-.thebai  .switch__status {
-  color:  #000;
+.thebai .switch__status {
+  color: #000;
 }
 .thebai .switch.active .switch__trigger {
-  background-color:  #000;
+  background-color: #000;
 }
 
 /* Monica */
-.monica{
+.monica {
   background-image: url(./logo/monica-logo.svg);
 }
 .monica .switch.active {
   box-shadow: 0 0 10px 0 rgba(81, 95, 251, 1);
 }
-.monica  .switch__status {
-  color:  #515FFB;
+.monica .switch__status {
+  color: #515ffb;
 }
 .monica .switch.active .switch__trigger {
-  background-color:  #515FFB;
+  background-color: #515ffb;
 }
 
 /* qwen */
-.qwen{
+.qwen {
   background-image: url(./logo/qwen-logo.svg);
 }
 .qwen .switch.active {
   box-shadow: 0 0 10px 0 rgb(98, 90, 237);
 }
-.qwen  .switch__status {
-  color:  #625aed;
+.qwen .switch__status {
+  color: #625aed;
 }
 .qwen .switch.active .switch__trigger {
-  background-color:  #625aed;
+  background-color: #625aed;
 }
