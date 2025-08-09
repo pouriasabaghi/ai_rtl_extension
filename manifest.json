@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AI RTL",
-  "version": "3.0",
+  "version": "3.1",
   "description": "سایت های هوش مصنوعی رو راستچین کنید و لذت ببرید",
   "permissions": ["activeTab", "storage"],
   "action": {
