@@ -5,7 +5,7 @@ document.head.insertAdjacentHTML(
   </style>`
 );
 
-function setAutoDirection({ aiResponseSelector, propmtInputSelector }) {
+function setAutoDirection({ aiResponseSelector, promptInputSelector }) {
   const elements = document.querySelectorAll(aiResponseSelector);
   elements.forEach((element) => {
     if (!element.hasAttribute("dir") || element.getAttribute("dir") !== "rtl") {
@@ -13,13 +13,17 @@ function setAutoDirection({ aiResponseSelector, propmtInputSelector }) {
     }
   });
 
-  propmtInputSelector &&
-  document.querySelector(propmtInputSelector)?.setAttribute("dir", "auto");
+  promptInputSelector &&
+  document.querySelector(promptInputSelector)?.setAttribute("dir", "auto");
 }
 
-function stopObserverAndReset(observer) {
+const observersByPlatform = new Map();
+
+function stopObserverAndReset(platform) {
+  const observer = observersByPlatform.get(platform);
   if (observer) {
     observer.disconnect();
+    observersByPlatform.delete(platform);
   }
 
   const elements = document.querySelectorAll('[dir="rtl"]');
@@ -38,6 +42,11 @@ async function getPlatforms() {
 }
 
 function createObserver(request) {
+  const existing = observersByPlatform.get(request.platform);
+  if (existing) {
+    existing.disconnect();
+  }
+
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.addedNodes.length) {
@@ -59,28 +68,27 @@ function createObserver(request) {
       request.rtlConflictFixerStyle
     );
 
+  observersByPlatform.set(request.platform, observer);
+
   return observer;
 }
 
 async function autoRTL() {
   const platforms = await getPlatforms();
   platforms.forEach(
-    ({ key, aiResponseSelector, rtlConflictFixerStyle, rtl, propmtInputSelector }) => {
+    ({ key, aiResponseSelector, rtlConflictFixerStyle, rtl, promptInputSelector }) => {
       if (rtl) {
-        createObserver({ key, aiResponseSelector, rtlConflictFixerStyle, propmtInputSelector });
+        createObserver({ platform: key, aiResponseSelector, rtlConflictFixerStyle, promptInputSelector });
       }
     }
   );
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  // Handle test message
-  let observer;
-
   if (request.action === "rtl") {
-    observer = createObserver(request);
+    createObserver(request);
   } else {
-    stopObserverAndReset(observer);
+    stopObserverAndReset(request.platform);
   }
 });
 

@@ -1,215 +1,286 @@
+:root {
+  --brand-start: #3b6ff0;
+  --brand-end: #1f4fd6;
+  --bg: #eef1f6;
+  --card-bg: #ffffff;
+  --text: #1f2430;
+  --text-secondary: #6b7280;
+  --border: #eef0f3;
+  --switch-bg-off: #e2e5eb;
+  --row-icon-bg: #f3f4f6;
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.16);
+}
+
+[data-theme="dark"] {
+  --bg: #0f1115;
+  --card-bg: #1b1e26;
+  --text: #f1f2f4;
+  --text-secondary: #9aa0ac;
+  --border: #2a2e38;
+  --switch-bg-off: #333846;
+  --row-icon-bg: #262a33;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
 main {
-  width: 250px;
-  padding-top: 1rem;
+  width: 300px;
+  background: var(--card-bg);
+  /* border-radius: 14px; */
+  overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
-section {
-  min-height: 80px;
+/* ===== HEADER ===== */
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, var(--brand-start), var(--brand-end));
+  color: #fff;
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.app-header__logo {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+}
+
+.theme-toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #fff;
+  padding: 0;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.theme-toggle__icon {
+  display: none;
+}
+
+[data-theme="light"] .theme-toggle__icon--sun {
+  display: block;
+}
+
+[data-theme="dark"] .theme-toggle__icon--moon {
+  display: block;
+}
+
+/* ===== PLATFORM LIST ===== */
+
+.platform-list {
+  padding: 4px 14px;
+}
+
+.platform-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 2px;
+  border-bottom: 1px solid var(--border);
+  background-image: none !important;
+}
+
+.platform-row:last-child {
+  border-bottom: none;
+}
+
+.platform-row__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 8px;
+}
+
+.platform-row__link:hover .platform-row__name {
+  text-decoration: underline;
+}
+
+.platform-row__icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background-color: var(--row-icon-bg);
   background-repeat: no-repeat;
-  background-size: contain;
-  background-position: top right;
-  background-size: 30%;
+  background-position: center;
+  background-size: 65%;
+  display: flex;
 }
 
-article {
-  padding-bottom: 2rem;
+.platform-row__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
 }
+
+/* ===== SWITCH ===== */
 
 .switch {
-  height: 25px;
+  height: 24px;
+  width: 44px;
   display: inline-flex;
   align-items: center;
-  background: #e6e6e6;
-  width: 60px;
-  padding: 0px 5px;
+  background: var(--switch-bg-off);
+  padding: 0;
   border-radius: 30px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.221);
   cursor: pointer;
   position: relative;
+  box-shadow: none;
+  transition: background-color 150ms;
+}
+
+.switch.active {
+  background: linear-gradient(135deg, var(--brand-start), var(--brand-end));
 }
 
 .switch__trigger {
-  width: 24.5px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: inline-block;
-  background-color: white;
-  box-shadow: 0 0 10px 0 rgba(26, 185, 42, 0.221);
-  border-radius: 24px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
   position: absolute;
-  left: 6px;
-  top: 2px;
-  transition: left 500ms, background-color 100ms;
+  left: 3px;
+  top: 3px;
+  transition: left 200ms;
 }
 
 .switch.active .switch__trigger {
-  left: 39px;
+  left: 23px;
 }
 
 .switch__checkbox {
   opacity: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
 }
 
 .switch__status {
-  font-weight: bold;
-  font-size: 12px;
-  margin-left: 2px;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
 }
 
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  background: white;
-  width: 100%;
-  max-width: 600px;
-  height: 36px;
-  border-radius: 0.5rem 0.5rem 0 0;
+/* ===== NOTE ===== */
+
+.note {
+  padding: 14px 16px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border);
+  font-family: "Vazirmatn", "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+.note a {
+  color: var(--brand-start);
+}
+
+/* ===== FOOTER ===== */
+
+.app-footer {
+  background: linear-gradient(135deg, var(--brand-start), var(--brand-end));
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 12px;
   display: flex;
   align-items: center;
-
-  box-shadow: 0 0 17px 0 rgb(0 0 0 / 12%);
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
-footer img {
+.app-footer img {
   vertical-align: middle;
+  filter: brightness(0) invert(1);
 }
 
-footer span {
-  margin-left: 0.75rem;
-}
-
-footer a {
+.app-footer a {
+  color: #fff;
   font-weight: bold;
-  color: black;
   text-decoration: underline;
 }
 
-/* ===== MODIFIERS ===== */
+/* ===== PLATFORM ICONS ===== */
 
-/* DEEPSEEK */
-.deepseek {
+.deepseek .platform-row__icon {
   background-image: url(./logo/deepseek-logo.svg);
 }
-.deepseek .switch.active {
-  box-shadow: 0 0 10px 0 rgb(70 107 254 / 78%);
-}
-.deepseek .switch__status {
-  color: #4d6bfe;
-}
-.deepseek .switch.active .switch__trigger {
-  background-color: #4d6bfe;
-}
-
-/* CHATGPT */
-.chatgpt {
+.chatgpt .platform-row__icon {
   background-image: url(./logo/chatgpt-logo.svg);
+  background-color: #262a33;
 }
-.chatgpt .switch.active {
-  box-shadow: 0 0 10px 0 rgb(16 163 127 / 78%);
-}
-.chatgpt .switch__status {
-  color: #14a37f;
-}
-.chatgpt .switch.active .switch__trigger {
-  background-color: #14a37f;
-}
-
-/* Copilot */
-.copilot {
+.copilot .platform-row__icon {
   background-image: url(./logo/copilot-logo.svg);
+  background-color: #262a33;
 }
-.copilot .switch.active {
-  box-shadow: 0 0 10px 0 rgb(253 83 197 / 78%);
-}
-.copilot .switch__status {
-  color: #cd53b3;
-}
-.copilot .switch.active .switch__trigger {
-  background-color: #cd53b3;
-}
-
-/* AIStudio */
-.aistudio {
-  background-image: url(./logo/aistudio-logo.svg);
-}
-.aistudio .switch.active {
-  box-shadow: 0 0 10px 0 rgb(0 87 204 / 78%);
-}
-.aistudio .switch__status {
-  color: #0057cc;
-}
-.aistudio .switch.active .switch__trigger {
-  background-color: #0057cc;
-}
-
-/* Grok */
-.grok {
+.grok .platform-row__icon {
   background-image: url(./logo/grok-logo.svg);
+  background-color: #262a33;
 }
-.grok .switch.active {
-  box-shadow: 0 0 10px 0 rgb(0 0 0 / 78%);
-}
-.grok .switch__status {
-  color: #000;
-}
-.grok .switch.active .switch__trigger {
-  background-color: #000;
-}
-
-/* Claude */
-.claude {
+.claude .platform-row__icon {
   background-image: url(./logo/claude-logo.svg);
 }
-.claude .switch.active {
-  box-shadow: 0 0 10px 0 rgb(217 119 87 / 78%);
-}
-.claude .switch__status {
-  color: #d97757;
-}
-.claude .switch.active .switch__trigger {
-  background-color: #d97757;
-}
-
-/* TheB.AI */
-.thebai {
-  background-image: url(./logo/thebai-logo.svg);
-}
-.thebai .switch.active {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.78);
-}
-.thebai .switch__status {
-  color: #000;
-}
-.thebai .switch.active .switch__trigger {
-  background-color: #000;
-}
-
-/* Monica */
-.monica {
+.monica .platform-row__icon {
   background-image: url(./logo/monica-logo.svg);
 }
-.monica .switch.active {
-  box-shadow: 0 0 10px 0 rgba(81, 95, 251, 1);
-}
-.monica .switch__status {
-  color: #515ffb;
-}
-.monica .switch.active .switch__trigger {
-  background-color: #515ffb;
-}
-
-/* qwen */
-.qwen {
+.qwen .platform-row__icon {
   background-image: url(./logo/qwen-logo.svg);
 }
-.qwen .switch.active {
-  box-shadow: 0 0 10px 0 rgb(98, 90, 237);
+.arena .platform-row__icon,
+.aistudio .platform-row__icon {
+  background-image: none;
+  background-size: 55%;
 }
-.qwen .switch__status {
-  color: #625aed;
-}
-.qwen .switch.active .switch__trigger {
-  background-color: #625aed;
+.arena .platform-row__icon::after,
+.aistudio .platform-row__icon::after {
+  content: "AI";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
 }
