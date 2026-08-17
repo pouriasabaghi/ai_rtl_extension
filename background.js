@@ -35,7 +35,7 @@ let platforms = [
   },
   {
     key: "claude",
-    aiResponseSelector: "[data-is-streaming]",
+    aiResponseSelector: ".font-claude-response-body",
   },
   {
     key: "thebai",
@@ -50,6 +50,12 @@ let platforms = [
     aiResponseSelector: "#response-content-container *:not(.code-cntainer):not(.code-cntainer *)",
     rtlConflictFixerStyle: `<style>#response-content-container *:not(.code-cntainer):not(.code-cntainer *){ unicode-bidi: embed;}</style>`,
     propmtInputSelector: "#chat-input",
+  },
+  {
+    key: "arena",
+    aiResponseSelector: ".prose",
+    rtlConflictFixerStyle: `<style>code{ display:inline-block; }</style>`,
+    propmtInputSelector: "textarea[name='message']",
   },
 ];
 

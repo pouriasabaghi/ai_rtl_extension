@@ -26,7 +26,8 @@
         "https://claude.ai/*",
         "https://beta.theb.ai/*",
         "https://monica.im/*",
-        "https://chat.qwen.ai/*"
+        "https://chat.qwen.ai/*",
+        "https://arena.ai/*"
       ],
       "js": ["content.js"]
     }
