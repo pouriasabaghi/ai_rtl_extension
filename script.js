@@ -1,9 +1,16 @@
 document.addEventListener("DOMContentLoaded", rtlManager);
 document.addEventListener("DOMContentLoaded", setupTheme);
+document.addEventListener("DOMContentLoaded", setupCustomAddButton);
 
 let platforms = [];
 async function rtlManager() {
   platforms = await getPlatforms();
+
+  platforms.forEach((platform) => {
+    if (platform.isCustom) {
+      renderCustomRow(platform);
+    }
+  });
 
   platforms.forEach(({ key, aiResponseSelector, rtlConflictFixerStyle, rtl, promptInputSelector, url }) => {
     setupRTL(key, aiResponseSelector, rtlConflictFixerStyle, rtl, promptInputSelector);
@@ -26,8 +33,7 @@ async function setupTheme() {
   if (!toggle) return;
 
   const stored = await getTheme();
-  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const theme = stored || (systemPrefersDark ? "dark" : "light");
+  const theme = stored || "dark";
 
   applyTheme(theme);
 
@@ -118,4 +124,94 @@ async function getPlatforms(){
 
 function setPlatforms(updatedPlatforms){
   chrome.storage.local.set({ platforms: updatedPlatforms }, function () {}); 
+}
+
+/* ===== CUSTOM AI SITES ===== */
+
+function makeCustomKey(url) {
+  const host = new URL(url).hostname.replace(/^www\./, "");
+  return "custom-" + host.replace(/[^a-z0-9]/gi, "-");
+}
+
+function originPatternFor(url) {
+  const u = new URL(url);
+  return `${u.protocol}//${u.hostname}/*`;
+}
+
+function renderCustomRow(platform) {
+  const list = document.getElementById("customList");
+  if (!list || document.querySelector(`.${platform.key}`)) return;
+
+  const initial = (platform.name || platform.url || "?").trim().charAt(0);
+
+  const section = document.createElement("section");
+  section.className = `platform-row ${platform.key}`;
+
+  const link = document.createElement("a");
+  link.className = "platform-row__link";
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.href = platform.url;
+
+  const icon = document.createElement("span");
+  icon.className = "custom-row__icon";
+  icon.textContent = initial;
+
+  const name = document.createElement("span");
+  name.className = "platform-row__name";
+  name.textContent = platform.name;
+
+  link.append(icon, name);
+
+  const label = document.createElement("label");
+  label.className = "switch";
+  label.innerHTML = `
+    <span class="switch__trigger"></span>
+    <span class="switch__status">On</span>
+    <input class="switch__checkbox" type="checkbox" />
+  `;
+
+  const removeBtn = document.createElement("button");
+  removeBtn.type = "button";
+  removeBtn.className = "custom-row__remove";
+  removeBtn.title = "حذف";
+  removeBtn.setAttribute("aria-label", "حذف");
+  removeBtn.textContent = "✕";
+  removeBtn.addEventListener("click", () => removeCustomSite(platform.key));
+
+  section.append(link, label, removeBtn);
+  list.appendChild(section);
+}
+
+function setupCustomAddButton() {
+  const openTabBtn = document.getElementById("customAddOpenTab");
+  if (!openTabBtn) return;
+
+  openTabBtn.addEventListener("click", () => {
+    chrome.tabs.create({ url: chrome.runtime.getURL("custom-site.html") });
+  });
+}
+
+async function removeCustomSite(key) {
+  const platform = platforms.find((p) => p.key === key);
+  if (!platform) return;
+
+  try {
+    await chrome.scripting.unregisterContentScripts({ ids: [key] });
+  } catch {
+    // Script might not be registered (e.g. added in a previous session
+    // before a browser restart cleared it); ignore and continue cleanup.
+  }
+
+  try {
+    await chrome.permissions.remove({ origins: [originPatternFor(platform.url)] });
+  } catch {
+    // Non-fatal if the permission was already revoked elsewhere.
+  }
+
+  platforms = platforms.filter((p) => p.key !== key);
+  setPlatforms(platforms);
+
+  const row = document.querySelector(`.${key}`);
+  if (row) row.remove();
 }

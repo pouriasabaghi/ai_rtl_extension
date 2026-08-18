@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>افزودن سایت هوش مصنوعی دلخواه | AI RTL</title>
+    <link rel="stylesheet" href="./fonts.css" />
+    <link rel="stylesheet" href="./custom-site.css" />
+    <script src="./theme-init.js"></script>
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-header">
+        <img src="./128x128.png" alt="" class="page-header__logo" />
+        <h1>افزودن سایت هوش مصنوعی دلخواه</h1>
+      </header>
+
+      <form class="custom-form" id="customForm">
+        <div class="field">
+          <label for="customName">نام سایت</label>
+          <p class="field__hint">هر مقدار دلخواهی می‌تواند باشد.</p>
+          <input type="text" id="customName" placeholder="Notebook LLM" required dir="ltr" />
+        </div>
+
+        <div class="field">
+          <label for="customUrl">آدرس سایت</label>
+          <p class="field__hint">حتما با https وارد شود.</p>
+          <input type="url" id="customUrl" placeholder="ex: https://notebook.google.com" required dir="ltr" />
+        </div>
+
+        <div class="field">
+          <label for="customResponseSelector">سلکتور پاسخ هوش مصنوعی</label>
+          <p class="field__hint">
+            این مقدار باید سلکتور پاسخ هوش مصنوعی باشد؛ همان باکسی که نیاز است راست‌چین شود.
+          </p>
+          <input type="text" id="customResponseSelector" placeholder="ex: .markdown" required dir="ltr" />
+        </div>
+
+        <div class="field">
+          <label for="customPromptSelector">سلکتور ورودی پرامپت <span class="field__optional">(اختیاری)</span></label>
+          <p class="field__hint">سلکتور input که پیام را برای هوش مصنوعی می‌نویسند.</p>
+          <input type="text" id="customPromptSelector" placeholder="ex: #prompt-textarea" dir="ltr" />
+        </div>
+
+        <p class="form-error" id="customFormError" hidden></p>
+
+        <p class="permission-hint">بعد از ثبت این فرم، مرورگر یک پیام تایید دسترسی نشان می‌دهد.</p>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary" id="customSubmit">افزودن سایت</button>
+          <button type="button" class="btn btn--secondary" id="customCancel">انصراف</button>
+        </div>
+      </form>
+    </div>
+    <script src="./custom-site.js"></script>
+  </body>
+</html>

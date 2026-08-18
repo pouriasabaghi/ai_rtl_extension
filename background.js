@@ -66,18 +66,23 @@ let platforms = [
 ];
 
 chrome.storage.local.get(["platforms"], async function (result) {
+  const storedPlatforms = result.platforms || [];
+
   // Default to enabled (rtl: true) so the extension works out of the box.
   // Platforms already configured by the user keep their stored value,
   // new platforms (not yet in storage) default to enabled.
   platforms = platforms.map((platform) => {
-    const storedPlatform = result.platforms?.find(
-      (p) => p.key === platform.key
-    );
+    const storedPlatform = storedPlatforms.find((p) => p.key === platform.key);
     return {
       ...platform,
       rtl: storedPlatform ? storedPlatform.rtl : true,
     };
   });
+
+  // Custom sites added by the user aren't part of the static list above,
+  // keep them as-is so they survive this normalization pass.
+  const customPlatforms = storedPlatforms.filter((p) => p.isCustom);
+  platforms = [...platforms, ...customPlatforms];
 
   // Save the updated platforms back to storage
   chrome.storage.local.set({ platforms: platforms }, function () {});
