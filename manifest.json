@@ -3,7 +3,8 @@
   "name": "AI RTL",
   "version": "4.1",
   "description": "سایت های هوش مصنوعی رو راستچین کنید و لذت ببرید",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "scripting"],
+  "optional_host_permissions": ["*://*/*"],
   "action": {
     "default_popup": "index.html"
   },

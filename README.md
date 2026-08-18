@@ -21,6 +21,16 @@
 - Automatic RTL
 - Prompt input RTL
 
+## V4
+- Dark/Light theme
+- Add your own custom AI site without editing any code: open the extension popup, click **"+ Add custom AI site"**, and it opens a dedicated tab (`custom-site.html`) where you can fill in:
+  - **Site name** — any label you want.
+  - **Site URL** — must start with `https`.
+  - **AI response selector** — the CSS selector of the element that should be flipped to RTL (e.g. `.markdown`).
+  - **Prompt input selector** (optional) — the CSS selector of the textbox where the user types their message.
+
+  Submitting the form asks the browser for permission to run on that one domain only, then registers a content script for it dynamically (via `chrome.scripting.registerContentScripts`) and saves it to `chrome.storage.local`. No `manifest.json` or code changes are required, and the site shows up in the popup list with its own toggle and a remove (✕) button. This is personal to each user and isn't shared with anyone else, it's just a quick way to make a site RTL-friendly for yourself.
+
 ## Did we miss some AI website?
 Feel free to open an issus
 
@@ -50,66 +60,69 @@ git clone https://github.com/pouriasabaghi/ai_rtl_extention.git
 
 ## Contributing
 
-Contributing to this project is very easy there is only few steps
+Contributing a built-in AI site is simple, just a few steps:
 
-- 1 - You need duplicated one of sections in index.html and give it a unique class name:
+- 1 - Add your platform's entry to the `platforms` array in `background.js`. This is the single source of truth; `key` must be a valid CSS class name and unique:
+
+```javascript
+let platforms = [
+  {
+    key: "custom-ai",
+    aiResponseSelector: ".custom-ai-markdown", // CSS selector for the AI response element
+    promptInputSelector: "#prompt-input", // optional: CSS selector for the prompt textbox
+    rtlConflictFixerStyle: `<style>code{ display:inline-block; }</style>`, // optional: fixes RTL rendering quirks
+    url: "https://custom-ai.example.com/", // link used for the row and to open the site
+  },
+];
+```
+
+- 2 - Add the site's domain to `content_scripts.matches` in `manifest.json` so the content script actually runs there:
+
+```json
+"content_scripts": [
+  {
+    "matches": [
+      "https://custom-ai.example.com/*"
+    ],
+    "js": ["content.js"]
+  }
+]
+```
+
+- 3 - Duplicate one of the `<section class="platform-row ...">` blocks in `index.html`, give it your platform's `key` as class name, and update the name shown in `.platform-row__name`:
 
 ```html
-<section class="custom-ai">...</section>
+<section class="platform-row custom-ai">
+  <a class="platform-row__link" target="_blank" rel="noopener noreferrer">
+    <span class="platform-row__icon"></span>
+    <span class="platform-row__name">Custom AI</span>
+  </a>
+  <label class="switch">
+    <span class="switch__trigger"></span>
+    <span class="switch__status">On</span>
+    <input class="switch__checkbox" type="checkbox" />
+  </label>
+</section>
 ```
 
-- 2 - Add your ai unique class name as key to platforms array in background.js
-
-```javascript
-  let platforms = [
-    {
-      key: "custom-ai",
-    },
-  ];
-```
-
-- 3 - You need to find right selector for ai response for example in chatgpt is .markdown and add it to aiResponseSelector
-
-```javascript
-  let platforms = [
-    {
-      key: "custom-ai",
-      aiResponseSelector: ".custom-ai-markdown", // this can be any valid selector
-    },
-  ];
-```
-
-- 4 - Maybe after changing page direction we need some fixing style for better experience you can add your style to rtlConflictFixerStyle
-
-```javascript
-  let platforms = [
-    {
-      key: "custom-ai",
-      aiResponseSelector: ".custom-ai-markdown",
-      rtlConflictFixerStyle: `<style>code{ display:inline-block; }</style>`,
-    },
-  ];
-```
-
-- 5 - Styling is optional step but you can create a logo for your custom ai and add it to logo directory and link it to your section in style.css and change modifiers
+- 4 - Add a logo (SVG, ideally square) to the `logo/` directory and wire it up in `style.css` under `/* ===== PLATFORM ICONS ===== */`:
 
 ```css
-/* ===== MODIFIERS ===== */
-
-/* CustomAI */
-.custom-ai {
+.custom-ai .platform-row__icon {
   background-image: url(./logo/custom-ai-logo.svg);
 }
-.custom-ai .switch.active {
-  box-shadow: 0 0 10px 0 rgb(0 0 0 / 78%);
-}
-.custom-ai .switch__status {
-  color: #000;
-}
-.custom-ai .switch.active .switch__trigger {
-  background-color: #000;
+```
+
+If the logo is monochrome white (fades out on the light theme), add a fixed dark background so it stays visible in both themes:
+
+```css
+.custom-ai .platform-row__icon {
+  background-image: url(./logo/custom-ai-logo.svg);
+  background-color: #262a33;
 }
 ```
+
+If you don't have a logo yet, you can reuse the text-based fallback icon (the same one used for Arena/AI Studio) by adding your selector to that shared rule instead of writing a new one.
 
 Feel free to fork the repository and submit pull requests for any enhancements or bug fixes. Contributions are always welcome!
 
